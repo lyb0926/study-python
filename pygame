@@ -1,0 +1,33 @@
+import pygame
+import sys
+pygame.init()
+ 
+size = width, height = 320, 240
+speed = [1, 1]
+black = 0, 0, 0
+
+screen = pygame.display.set_mode(size)
+ 
+ball = pygame.image.load("ship.bmp")
+
+ballrect = ball.get_rect()#得到飞机的矩形
+screenrect = screen.get_rect()#得到屏幕的矩形
+
+#飞机放到屏幕底部中间
+ballrect.centerx = screenrect.centerx
+ballrect.bottom = screenrect.bottom
+
+while 1:
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT: sys.exit()
+
+	ballrect = ballrect.move(speed)
+	if ballrect.left < 0 or ballrect.right > width:
+		speed[0] = -speed[0]
+	if ballrect.top < 0 or ballrect.bottom > height:
+		speed[1] = -speed[1]
+
+	screen.fill(black)#填充黑色 抹去之前窗口
+	screen.blit(ball, ballrect)#图象数据画到变量ballrect指定的区域
+	pygame.display.flip()#显示图像
+	
